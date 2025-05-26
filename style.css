@@ -1,0 +1,575 @@
+/* Rally Obedience Course Designer - Styles */
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f4f8;
+    color: #333;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Layout */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 300px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    height: 100%;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding-bottom: 20px;
+}
+
+.main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Logo */
+.logo {
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #3498db;
+    background-color: #1a2530;
+    text-align: center;
+}
+
+/* Sections */
+.section {
+    padding: 15px;
+    border-bottom: 1px solid #34495e;
+}
+
+.section h3 {
+    margin-bottom: 10px;
+    color: #3498db;
+}
+
+/* Level Buttons */
+.level-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.level-btn {
+    background-color: #34495e;
+    color: white;
+    border: none;
+    padding: 8px 0;
+    flex: 1;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.level-btn:first-child {
+    margin-left: 0;
+}
+
+.level-btn:last-child {
+    margin-right: 0;
+}
+
+.level-btn:hover {
+    background-color: #2980b9;
+}
+
+.level-btn.active {
+    background-color: #3498db;
+    font-weight: bold;
+}
+
+/* Info Display */
+.info-display {
+    background-color: #34495e;
+    padding: 8px;
+    text-align: center;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+/* Search Container */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #34495e;
+    border-radius: 4px;
+    background-color: #34495e;
+    color: white;
+}
+
+.search-container input::placeholder {
+    color: #7f8c8d;
+}
+
+.clear-btn {
+    position: absolute;
+    right: 8px;
+    background: none;
+    border: none;
+    color: #7f8c8d;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.clear-btn:hover {
+    color: #ecf0f1;
+}
+
+/* Cartelli Container */
+.cartelli-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.cartello-item {
+    width: calc(50% - 5px);
+    background-color: #ecf0f1;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    cursor: grab;
+    color: #333;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.cartello-item:hover {
+    transform: scale(1.03);
+    border-color: #3498db;
+}
+
+.cartello-icon {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cartello-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.cartello-name {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* Objects */
+.object-item .cartello-icon {
+    font-size: 24px;
+}
+
+/* Grid Controls */
+.grid-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.grid-btn {
+    background-color: #34495e;
+    color: white;
+    border: none;
+    padding: 6px;
+    flex: 1;
+    min-width: calc(33.333% - 4px);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-size: 12px;
+}
+
+.grid-btn:hover {
+    background-color: #2980b9;
+}
+
+.grid-btn.active {
+    background-color: #3498db;
+    font-weight: bold;
+}
+
+.toggle-btn {
+    width: 100%;
+    background-color: #34495e;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.toggle-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Field Size Controls */
+.field-size {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.field-size-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.field-size-input label {
+    flex: 1;
+}
+
+.field-size-input input {
+    width: 60px;
+    padding: 6px;
+    border: 1px solid #34495e;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.fit-screen-btn {
+    margin-top: 10px;
+    background-color: #3498db;
+    color: white;
+    width: 100%;
+}
+
+.fit-screen-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Toolbar */
+.toolbar {
+    background-color: #ecf0f1;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #bdc3c7;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.course-info {
+    display: flex;
+    gap: 15px;
+}
+
+.info-item {
+    font-size: 14px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Buttons */
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-success {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #27ae60;
+}
+
+.btn-warning {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #c0392b;
+}
+
+.btn-info {
+    background-color: #9b59b6;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #8e44ad;
+}
+
+.btn-secondary {
+    background-color: #7f8c8d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #6c7a7a;
+}
+
+/* Canvas Area */
+.canvas-area {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    background-color: #27ae60;
+}
+
+.field {
+    background-color: #f0fff0;
+    position: absolute;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.grid-overlay {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Placed Items */
+.placed-item {
+    position: absolute;
+    z-index: 20;
+    width: 80px;
+    height: 80px;
+    cursor: move;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.2s;
+}
+
+/* Object-specific styles */
+.placed-item.cone-object,
+.placed-item.table-object,
+.placed-item.jump-object {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.placed-item.cone-object img,
+.placed-item.table-object img,
+.placed-item.jump-object img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Cartello styles */
+.placed-item.cartello img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0;
+}
+
+.placed-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.placed-item.selected {
+    outline: 2px solid #3498db;
+    box-shadow: 0 0 12px rgba(52, 152, 219, 0.5);
+}
+
+/* Rotation Controls */
+.rotation-controls {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.placed-item:hover .rotation-controls,
+.placed-item.selected .rotation-controls {
+    opacity: 1;
+}
+
+.rotate-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rotate-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Station Numbers */
+.station-number {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #e74c3c;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Modals */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #7f8c8d;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+.help-content, .about-content {
+    margin: 20px 0;
+}
+
+.help-content h3 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: #3498db;
+}
+
+.help-content ul, .help-content ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.help-content li {
+    margin-bottom: 5px;
+}
+
+/* Warning for small screens */
+.warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.warning-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+}
+
+.warning h3 {
+    color: #e74c3c;
+    margin-bottom: 15px;
+}
+
+.warning p {
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none;
+}

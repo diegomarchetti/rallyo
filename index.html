@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rally Obedience Course Designer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Warning for small screens -->
+    <div id="warning" class="warning hidden">
+        <div class="warning-content">
+            <h3>⚠️ Schermo troppo piccolo</h3>
+            <p>Per una migliore esperienza, usa un dispositivo con risoluzione minima 1200x800px</p>
+            <button class="btn btn-primary" onclick="closeWarning()">OK</button>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleModal('helpModal')">&times;</span>
+            <h2>Guida all'utilizzo</h2>
+            <div class="help-content">
+                <h3>Creare un percorso di Rally Obedience</h3>
+                <ol>
+                    <li><strong>Seleziona la classe</strong> - Scegli tra L1, L2, L3 o L3B per accedere ai cartelli specifici per quella classe</li>
+                    <li><strong>Posiziona i cartelli</strong> - Trascina i cartelli dalla barra laterale sul campo</li>
+                    <li><strong>Aggiungi oggetti</strong> - Trascina i coni, il salto e il tavolo sul campo secondo necessità</li>
+                    <li><strong>Ruota gli elementi</strong> - Usa i pulsanti di rotazione che appaiono quando passi il mouse su un elemento</li>
+                    <li><strong>Salva il percorso</strong> - Clicca su "Salva" per esportare il percorso come file JSON</li>
+                </ol>
+                
+                <h3>Scorciatoie da mouse e tastiera</h3>
+                <ul>
+                    <li><strong>Delete</strong> - Elimina l'elemento selezionato</li>
+                    <li><strong>Doppio click</strong> - Elimina l'elemento selezionato</li>
+                    <li><strong>Ctrl+S</strong> - Salva il percorso</li>
+                </ul>
+                
+                <h3>Suggerimenti</h3>
+                <ul>
+                    <li>Puoi cercare rapidamente un cartello inserendo il suo numero nella casella di ricerca</li>
+                    <li>La griglia può essere ridimensionata o nascosta usando i controlli nella barra laterale</li>
+                    <li>Gli elementi possono essere riposizionati trascinandoli dopo averli posizionati</li>
+                    <li>Ogni nuovo cartello mantiene la rotazione dell'ultimo cartello posizionato</li>
+                    <li>Dopo aver terminato il disegno del percorso è possibile stamparlo premendo sul pulsante "stampa"</li>
+                </ul>
+            </div>
+            <button class="btn btn-primary" onclick="toggleModal('helpModal')">Chiudi</button>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleModal('aboutModal')">&times;</span>
+            <h2>Informazioni</h2>
+            <div class="about-content">
+                <p><strong>Rally Obedience Course Designer</strong></p>
+                <p>Versione: 1.1.0</p>
+                <p>Data rilascio: Maggio 2025</p>
+                <p>Autore: Diego Marchetti</p></br>
+                <p>Questo strumento permette di creare e condividere percorsi di Rally Obedience.</p>
+                <p>Per suggerimenti o segnalazioni di bug, contattare l'autore.</p></br>
+                <p>E-mail: dimarche1975@gmail.com</p>
+            </div>
+            <button class="btn btn-primary" onclick="toggleModal('aboutModal')">Chiudi</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">🎯 Rally-O Designer</div>
+            
+            <!-- Level Selection -->
+            <div class="section">
+                <h3>Classe</h3>
+                <div class="level-buttons">
+                    <button class="level-btn active" onclick="setLevel('L1')">L1</button>
+                    <button class="level-btn" onclick="setLevel('L2')">L2</button>
+                    <button class="level-btn" onclick="setLevel('L3')">L3</button>
+                    <button class="level-btn" onclick="setLevel('L3B')">L3B</button>
+                </div>
+                <div id="levelInfo" class="info-display">
+                    Stazioni: 15 max
+                </div>
+            </div>
+
+            <!-- Cartelli Search -->
+            <div class="section">
+                <h3>Cerca Cartello</h3>
+                <div class="search-container">
+                    <input type="text" id="cartelloSearch" placeholder="Numero cartello..." onkeyup="searchCartelli()">
+                    <button class="clear-btn" onclick="clearSearch()">✕</button>
+                </div>
+            </div>
+
+            <!-- Cartelli -->
+            <div class="section">
+                <h3>Cartelli</h3>
+                <div id="cartelliGrid" class="cartelli-container">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Objects -->
+            <div class="section">
+                <h3>Oggetti</h3>
+                <div class="cartelli-container">
+                    <div class="cartello-item object-item" draggable="true" data-type="object" data-id="cone">
+                        <div class="cartello-icon"><img src="ASSETS/CONO.png" alt="Cono"></div>
+                        <div class="cartello-name">Cono</div>
+                    </div>
+                    <div class="cartello-item object-item" draggable="true" data-type="object" data-id="jump">
+                        <div class="cartello-icon"><img src="ASSETS/SALTO.png" alt="Salto"></div>
+                        <div class="cartello-name">Salto</div>
+                    </div>
+                    <div class="cartello-item object-item" draggable="true" data-type="object" data-id="table">
+                        <div class="cartello-icon"><img src="ASSETS/TAVOLO.png" alt="Tavolo"></div>
+                        <div class="cartello-name">Tavolo</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Controls -->
+            <div class="section">
+                <h3>Griglia</h3>
+                <div class="grid-controls">
+                    <button class="grid-btn" onclick="setGridSize(10)">10px</button>
+                    <button class="grid-btn active" onclick="setGridSize(20)">20px</button>
+                    <button class="grid-btn" onclick="setGridSize(40)">40px</button>
+                    <button class="grid-btn" onclick="setGridSize(60)">60px</button>
+                    <button class="grid-btn" onclick="setGridSize(80)">80px</button>
+                    <button class="grid-btn" onclick="setGridSize(100)">100px</button>
+                </div>
+                <button class="toggle-btn" onclick="toggleGrid()">Mostra/Nascondi Griglia</button>
+            </div>
+
+            <!-- Field Size Controls -->
+            <div class="section">
+                <h3>Dimensioni Campo</h3>
+                <div class="field-size">
+                    <div class="field-size-input">
+                        <label>Larghezza (px):</label>
+                        <input type="number" id="fieldWidth" min="600" value="800" onchange="updateFieldSize()">
+                    </div>
+                    <div class="field-size-input">
+                        <label>Altezza (px):</label>
+                        <input type="number" id="fieldHeight" min="400" value="600" onchange="updateFieldSize()">
+                    </div>
+                </div>
+                <button class="btn fit-screen-btn" onclick="autoSizeField()">Adatta allo schermo</button>
+            </div>
+        </div>
+
+        <!-- Main Area -->
+        <div class="main-area">
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="course-info">
+                    <div class="info-item">
+                        <strong>Classe:</strong> <span id="currentLevel">L1</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Stazioni:</strong> <span id="stationCount">0/15</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Autore:</strong> <span id="authorDisplay">-</span>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-warning" onclick="clearField()">🗑️ Pulisci</button>
+                    <button class="btn btn-success" onclick="saveCourse()">💾 Salva</button>
+                    <button class="btn btn-primary" onclick="loadCourse()">📂 Carica</button>
+                    <button class="btn btn-info" onclick="printCourse()">🖨️ Stampa</button>
+                    <button class="btn btn-secondary" onclick="toggleModal('helpModal')">❓ Aiuto</button>
+                    <button class="btn btn-secondary" onclick="toggleModal('aboutModal')">ℹ️ Info</button>
+                </div>
+            </div>
+
+            <!-- Canvas -->
+            <div class="canvas-area" id="canvasArea">
+                <div id="field" class="field"></div>
+                <svg id="gridSvg" class="grid-overlay"></svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript files -->
+    <script src="js/config.js"></script>
+    <script src="js/cartelli.js"></script>
+    <script src="js/drag-drop.js"></script>
+    <script src="js/field-items.js"></script>
+    <script src="js/field-grid.js"></script>
+    <script src="js/file-operations.js"></script>
+    <script src="js/ui-controls.js"></script>
+    <script src="js/init.js"></script>
+</body>
+</html>
