@@ -61,11 +61,24 @@ function renderItem(item) {
 
     // Create content container
     const contentDiv = document.createElement('div');
+    contentDiv.className = 'cartello-content';
     
     // If we have an image path, use it
     if (item.imagePath) {
         const img = document.createElement('img');
-        img.src = item.imagePath;
+        // Fix issue with relative paths by ensuring they are relative to the current URL
+        // Remove any URL parameters from the current location for clean base URL
+        const baseUrl = window.location.href.split('?')[0].split('#')[0];
+        const basePath = baseUrl.substring(0, baseUrl.lastIndexOf('/') + 1);
+        
+        // If the path doesn't include http/https or doesn't start with a slash,
+        // assume it's relative to the app root
+        if (!item.imagePath.includes('://') && !item.imagePath.startsWith('/')) {
+            img.src = new URL(item.imagePath, basePath).href;
+        } else {
+            img.src = item.imagePath;
+        }
+        
         img.alt = item.name;
         contentDiv.appendChild(img);
     } else {

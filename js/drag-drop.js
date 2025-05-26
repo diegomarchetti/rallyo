@@ -12,20 +12,44 @@ function handleDragStart(e) {
         // Find the cartello in our data
         let cartello = null;
         
-        // Search in base cartelli
+        // Search in all cartelli collections based on the new structure
         cartello = cartelli.base.find(c => c.id === target.dataset.id);
         
+        // Check if it's the jolly cartello
+        if (!cartello && target.dataset.id === 'jolly') {
+            cartello = cartelli.jolly;
+        }
+        
+        // If not found in base or jolly, check in the appropriate level collections
         if (!cartello) {
-            // Search in level-specific cartelli
-            if (config.state.currentLevel === 'L1') {
-                cartello = cartelli.L1.find(c => c.id === target.dataset.id);
-            } else if (config.state.currentLevel === 'L2') {
-                cartello = cartelli.L1.find(c => c.id === target.dataset.id) || 
-                           cartelli.L2.find(c => c.id === target.dataset.id);
-            } else if (config.state.currentLevel === 'L3') {
-                cartello = cartelli.L1.find(c => c.id === target.dataset.id) || 
-                           cartelli.L2.find(c => c.id === target.dataset.id) || 
-                           cartelli.L3.find(c => c.id === target.dataset.id);
+            if (config.state.currentLevel === 'L3B') {
+                // Search in L3B cartelli
+                cartello = cartelli.L3B.find(c => c.id === target.dataset.id);
+            } else {
+                // Search in regular cartelli collections
+                if (cartelli.regular.L1) {
+                    cartello = cartelli.regular.L1.find(c => c.id === target.dataset.id);
+                }
+                
+                if (!cartello && cartelli.regular.L2 && 
+                    (config.state.currentLevel === 'L2' || config.state.currentLevel === 'L3')) {
+                    cartello = cartelli.regular.L2.find(c => c.id === target.dataset.id);
+                }
+                
+                if (!cartello && cartelli.regular.L3 && config.state.currentLevel === 'L3') {
+                    cartello = cartelli.regular.L3.find(c => c.id === target.dataset.id);
+                }
+                
+                // Search in bonus cartelli
+                if (!cartello) {
+                    if (config.state.currentLevel === 'L1' && cartelli.bonus.L1) {
+                        cartello = cartelli.bonus.L1.find(c => c.id === target.dataset.id);
+                    } else if (config.state.currentLevel === 'L2' && cartelli.bonus.L2) {
+                        cartello = cartelli.bonus.L2.find(c => c.id === target.dataset.id);
+                    } else if (config.state.currentLevel === 'L3' && cartelli.bonus.L3) {
+                        cartello = cartelli.bonus.L3.find(c => c.id === target.dataset.id);
+                    }
+                }
             }
         }
         

@@ -206,13 +206,13 @@ function updateCartelliGrid() {
             levelCartelli = [...cartelli.regular.L1, ...cartelli.regular.L2, ...cartelli.regular.L3];
         }
         
-        // Add bonus cartelli for current level and below
+        // Add bonus cartelli for the current level only (not levels below)
         if (config.state.currentLevel === 'L1') {
             levelCartelli = [...levelCartelli, ...cartelli.bonus.L1];
         } else if (config.state.currentLevel === 'L2') {
-            levelCartelli = [...levelCartelli, ...cartelli.bonus.L1, ...cartelli.bonus.L2];
+            levelCartelli = [...levelCartelli, ...cartelli.bonus.L2];
         } else if (config.state.currentLevel === 'L3') {
-            levelCartelli = [...levelCartelli, ...cartelli.bonus.L1, ...cartelli.bonus.L2, ...cartelli.bonus.L3];
+            levelCartelli = [...levelCartelli, ...cartelli.bonus.L3];
         }
     }
 
